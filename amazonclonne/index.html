@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Amazon Clone</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo"><div class="mark">a</div>Amazon Clone</div>
+    <div class="searchbar">
+      <input placeholder="Search products, brands and more" aria-label="search">
+      <button aria-label="search-button">Search</button>
+    </div>
+    <div class="nav-actions">
+      <div class="btn">Sign In</div>
+      <div class="btn">Returns</div>
+      <div class="btn">Cart</div>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="banner">
+        <h1>Today's deals on top picks</h1>
+        <p>Handpicked offers across electronics, fashion, home and more.</p>
+        <div class="chips">
+          <div class="chip">Free Delivery</div>
+          <div class="chip">Easy Returns</div>
+          <div class="chip">24/7 Support</div>
+        </div>
+        <div class="quick-grid">
+          <div class="promo"><strong>Up to 50% off</strong><span class="desc">Top electronics</span></div>
+          <div class="promo"><strong>Buy 1 Get 1</strong><span class="desc">Selected apparel</span></div>
+          <div class="promo"><strong>New arrivals</strong><span class="desc">Home & kitchen</span></div>
+        </div>
+      </div>
+      <aside class="side-box">
+        <h3>Shop by category</h3>
+        <div class="categories">
+          <div class="category">Electronics</div>
+          <div class="category">Fashion</div>
+          <div class="category">Home</div>
+          <div class="category">Beauty</div>
+          <div class="category">Toys</div>
+          <div class="category">Sports</div>
+        </div>
+        <div class="see-deals"><button class="add">See all deals</button></div>
+      </aside>
+    </section>
+
+    <div class="layout">
+      <aside>
+        <div class="filter-card">
+          <h4>Filters</h4>
+          <div class="filters">
+            <label><input type="checkbox"> Prime</label>
+            <label><input type="checkbox"> Free Delivery</label>
+            <label><input type="checkbox"> New Arrivals</label>
+          </div>
+        </div>
+        <div class="filter-card">
+          <h4>Price</h4>
+          <div class="price-range">
+            <input placeholder="Min">
+            <input placeholder="Max">
+          </div>
+          <div class="apply"><button class="add">Apply</button></div>
+        </div>
+      </aside>
+
+      <section class="catalog">
+        <div class="banner-grid">
+          <div class="banner-img"><img src="https://via.placeholder.com/80" alt="promo"><div><strong>Up to 40% off</strong><div class="desc">Smartphones</div></div></div>
+          <div class="banner-img"><img src="https://via.placeholder.com/80" alt="promo"><div><strong>Deals under $50</strong><div class="desc">Accessories</div></div></div>
+          <div class="banner-img"><img src="https://via.placeholder.com/80" alt="promo"><div><strong>Home essentials</strong><div class="desc">Curated picks</div></div></div>
+        </div>
+
+        <div class="results-bar">
+          <h2>Recommended for you</h2>
+          <div class="muted">Showing 1-24 of 1,000+</div>
+        </div>
+
+        <div class="products">
+          <article class="card">
+            <img src="https://via.placeholder.com/300x200?text=Headphones" alt="product">
+            <div class="title">Wireless Headphones Model X</div>
+            <div class="desc">Comfort-fit, 30hr battery</div>
+            <div class="price-row">
+              <div>
+                <div class="price">$79<span class="per"> / unit</span></div>
+                <div class="old">$129</div>
+              </div>
+              <div class="star">4.5</div>
+            </div>
+            <button class="add">Add to Cart</button>
+          </article>
+
+          <article class="card">
+            <img src="https://via.placeholder.com/300x200?text=Coffee+Maker" alt="product">
+            <div class="title">Compact Coffee Maker</div>
+            <div class="desc">Brews in under 5 minutes</div>
+            <div class="price-row">
+              <div>
+                <div class="price">$49</div>
+                <div class="old">$69</div>
+              </div>
+              <div class="star">4.3</div>
+            </div>
+            <button class="add">Add to Cart</button>
+          </article>
+
+          <article class="card">
+            <img src="https://via.placeholder.com/300x200?text=Sneakers" alt="product">
+            <div class="title">Running Sneakers</div>
+            <div class="desc">Lightweight & breathable</div>
+            <div class="price-row">
+              <div>
+                <div class="price">$69</div>
+              </div>
+              <div class="star">4.6</div>
+            </div>
+            <button class="add">Add to Cart</button>
+          </article>
+
+          <article class="card">
+            <img src="https://via.placeholder.com/300x200?text=Smart+Watch" alt="product">
+            <div class="title">Smart Watch Series 5</div>
+            <div class="desc">Heart-rate & GPS</div>
+            <div class="price-row">
+              <div>
+                <div class="price">$129</div>
+                <div class="old">$199</div>
+              </div>
+              <div class="star">4.7</div>
+            </div>
+            <button class="add">Add to Cart</button>
+          </article>
+
+          <article class="card">
+            <img src="https://via.placeholder.com/300x200?text=Blender" alt="product">
+            <div class="title">High-speed Blender</div>
+            <div class="desc">Smoothies in seconds</div>
+            <div class="price-row">
+              <div>
+                <div class="price">$89</div>
+              </div>
+              <div class="star">4.4</div>
+            </div>
+            <button class="add">Add to Cart</button>
+          </article>
+
+          <article class="card">
+            <img src="https://via.placeholder.com/300x200?text=Lamp" alt="product">
+            <div class="title">Adjustable Desk Lamp</div>
+            <div class="desc">Warm & cool light modes</div>
+            <div class="price-row">
+              <div>
+                <div class="price">$29</div>
+              </div>
+              <div class="star">4.2</div>
+            </div>
+            <button class="add">Add to Cart</button>
+          </article>
+
+        </div>
+
+      </section>
+    </div>
+
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-col">
+          <strong>Amazon Clone</strong>
+          <div class="muted">Buy, sell and discover great deals.</div>
+        </div>
+        <div class="footer-col">
+          <div class="fw">Let Us Help</div>
+          <div class="muted">Customer service · Shipping · Returns</div>
+        </div>
+        <div class="footer-col">
+          <div class="fw">Make Money With Us</div>
+          <div class="muted">Sell on Amazon · Affiliates</div>
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
