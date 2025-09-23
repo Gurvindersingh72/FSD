@@ -1,42 +1,208 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Student Marks System</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Student Marks System</title>
+  <style>
+    :root{
+      --bg: #f7fafc;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent: #4f46e5;
+      --success: #059669;
+      --danger: #dc2626;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    body{margin:0;background:var(--bg);color:#111827;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;padding:28px;}
+    .container{max-width:1000px;margin:0 auto;display:grid;grid-template-columns: 1fr 320px;gap:24px;align-items:start;}
+    h1{margin:0 0 8px 0;font-size:20px;letter-spacing:-0.2px;}
+    p.lead{margin:0 0 18px 0;color:var(--muted);font-size:14px;}
+    .card{background:var(--card);border-radius:10px;padding:18px;box-shadow: 0 6px 18px rgba(15,23,42,0.04);}
+    table{width:100%;border-collapse:collapse;font-size:15px;}
+    thead th{text-align:left;color:var(--muted);font-weight:600;padding-bottom:10px;}
+    tbody tr{border-top:1px solid #f1f5f9;}
+    tbody td{padding:12px 0;vertical-align:middle;}
+    .name{font-weight:600;}
+    .controls{display:flex;flex-direction:column;gap:12px;}
+    button, input[type="text"]{font-size:14px;padding:8px 12px;border-radius:8px;border:1px solid #e6e9ef;outline:none;}
+    button{background:#fff;cursor:pointer;}
+    .btn-accent{background:linear-gradient(90deg,var(--accent),#6366f1);color:white;border:0;box-shadow: 0 6px 12px rgba(99,102,241,0.16);}
+    .btn-ghost{background:transparent;border:1px dashed #e6e9ef;}
+    .small{font-size:13px;color:var(--muted);}
+    .result{margin-top:8px;padding:10px;border-radius:8px;background:#f8fafc;color:#0f172a;font-weight:600;}
+    .form-row{display:flex;gap:8px;align-items:center;}
+    .flex-right{display:flex;gap:8px;justify-content:flex-end;}
+    @media (max-width:860px){.container{ grid-template-columns: 1fr; padding:0 12px; } .controls{ flex-direction:row; flex-wrap:wrap; justify-content:space-between; }}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Student Marks System</h2>
-        <p>A simple interactive demo to practice JavaScript arrays: add/remove/sort/calc avg/find max.</p>
-        <div id="stats"></div>
+  <div class="container">
+    
+    <section class="card">
+      <h1>Student Marks System</h1>
+      <p class="lead">A simple client-side system to display, sort and add student marks with subjects.</p>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Marks</th>
-                </tr>
-            </thead>
-            <tbody id="studentsTable"></tbody>
-        </table>
+      <table id="studentsTable" aria-label="Students">
+        <thead>
+          <tr>
+            <th>Student</th>
+            <th>Subject</th>
+            <th style="text-align:right">Marks</th>
+          </tr>
+        </thead>
+        <tbody id="studentsBody"></tbody>
+      </table>
 
-        <div class="controls">
-            <button onclick="showHighest()">Show Highest</button>
-            <button onclick="showAverage()">Show Average</button>
-            <button onclick="sortByMarks()">Sort by Marks ↓</button>
-            <button onclick="resetSample()">Reset Sample</button>
-            <button onclick="removeLast()">Remove Last</button>
+      <div style="margin-top:14px" class="small" id="notes">Sorted students by marks (highest → lowest)</div>
+    </section>
+
+   
+    <aside class="card">
+      <div class="controls">
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button class="btn-accent" id="btnHighest">Show Highest</button>
+          <button id="btnAverage">Show Average</button>
         </div>
 
-        <div class="add-student">
-            <input type="text" id="studentName" placeholder="Student name">
-            <input type="number" id="studentMarks" placeholder="Marks (0-100)" min="0" max="100">
-            <button onclick="addStudent()">Add Student</button>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button id="btnSort">Sort by Marks ↓</button>
+          <button class="btn-ghost" id="btnReset">Reset Sample</button>
         </div>
 
-        <div id="message"></div>
-    </div>
-    <script src="mark.js"></script>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <button id="btnRemove">Remove Last</button>
+        </div>
+
+        <div style="margin-top:10px;">
+          <label class="small">Add a student</label>
+          <div class="form-row" style="margin-top:6px;">
+            <input id="newName" type="text" placeholder="Student name" />
+            <input id="newSubject" type="text" placeholder="Subject" style="width:110px" />
+            <input id="newMarks" type="text" placeholder="Marks (0-100)" style="width:100px" />
+          </div>
+          <div style="margin-top:8px; display:flex; gap:8px;">
+            <button id="btnAdd">Add Student</button>
+            <div class="small" style="align-self:center;color:var(--muted)">Max 100</div>
+          </div>
+        </div>
+
+        <div id="result" class="result" style="display:none;"></div>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+  
+    let students = [
+      {name: 'Divya', subject:'Math', marks: 98},
+      {name: 'Karan', subject:'Science', marks: 95},
+      {name: 'Pripa', subject:'English', marks: 92},
+      {name: 'Sneha', subject:'History', marks: 83},
+      {name: 'Amit', subject:'Math', marks: 85},
+      {name: 'Rahul', subject:'Geography', marks: 76}
+    ];
+
+    const studentsBody = document.getElementById('studentsBody');
+    const resultEl = document.getElementById('result');
+    const notesEl = document.getElementById('notes');
+    let sortedDesc = true;
+
+    function render(){
+      studentsBody.innerHTML = '';
+      students.forEach((s) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="name">${escapeHtml(s.name)}</td>
+          <td>${escapeHtml(s.subject)}</td>
+          <td style="text-align:right">${escapeHtml(String(s.marks))}</td>
+        `;
+        studentsBody.appendChild(tr);
+      });
+      notesEl.textContent = `Sorted students by marks (${sortedDesc ? 'highest → lowest' : 'lowest → highest'})`;
+    }
+
+    function escapeHtml(str){
+      return str.replace(/[&<>"']/g, (m)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]));
+    }
+
+    function showHighest(){
+      if(students.length === 0){ showResult('No students'); return; }
+      const top = students.reduce((a,b) => (b.marks > a.marks ? b : a), students[0]);
+      showResult(`Highest: ${top.name} (${top.subject}) — ${top.marks}`);
+    }
+
+    function showAverage(){
+      if(students.length === 0){ showResult('No students'); return; }
+      const sum = students.reduce((s,st) => s + Number(st.marks), 0);
+      const avg = (sum / students.length).toFixed(2);
+      showResult(`Average marks: ${avg}`);
+    }
+
+    function sortByMarks(){
+      students.sort((a,b) => sortedDesc ? b.marks - a.marks : a.marks - b.marks);
+      sortedDesc = !sortedDesc;
+      document.getElementById('btnSort').textContent = `Sort by Marks ${sortedDesc ? '↓' : '↑'}`;
+      render();
+    }
+
+    function resetSample(){
+      students = [
+        {name: 'Divya', subject:'Math', marks: 98},
+        {name: 'Karan', subject:'Science', marks: 95},
+        {name: 'Pripa', subject:'English', marks: 92},
+        {name: 'Sneha', subject:'History', marks: 83},
+        {name: 'Amit', subject:'Math', marks: 85},
+        {name: 'Rahul', subject:'Geography', marks: 76}
+      ];
+      sortedDesc = true;
+      document.getElementById('btnSort').textContent = 'Sort by Marks ↓';
+      render();
+      showResult('Sample restored');
+    }
+
+    function removeLast(){
+      if(students.length === 0){ showResult('No students to remove'); return; }
+      const removed = students.pop();
+      render();
+      showResult(`Removed: ${removed.name} (${removed.subject})`);
+    }
+
+    function addStudent(){
+      const name = document.getElementById('newName').value.trim();
+      const subject = document.getElementById('newSubject').value.trim();
+      const marksRaw = document.getElementById('newMarks').value.trim();
+
+      if(!name){ showResult('Enter a name'); return; }
+      if(!subject){ showResult('Enter a subject'); return; }
+      if(!marksRaw || isNaN(marksRaw)){ showResult('Enter numeric marks'); return; }
+      const marks = Number(marksRaw);
+      if(marks < 0 || marks > 100){ showResult('Marks must be between 0 and 100'); return; }
+
+      students.push({name, subject, marks});
+      document.getElementById('newName').value = '';
+      document.getElementById('newSubject').value = '';
+      document.getElementById('newMarks').value = '';
+      render();
+      showResult(`Added: ${name} (${subject}) — ${marks}`);
+    }
+
+    function showResult(text){
+      resultEl.style.display = 'block';
+      resultEl.textContent = text;
+      setTimeout(()=> {
+        resultEl.style.display = 'none';
+      }, 4000);
+    }
+
+    document.getElementById('btnHighest').addEventListener('click', showHighest);
+    document.getElementById('btnAverage').addEventListener('click', showAverage);
+    document.getElementById('btnSort').addEventListener('click', sortByMarks);
+    document.getElementById('btnReset').addEventListener('click', resetSample);
+    document.getElementById('btnRemove').addEventListener('click', removeLast);
+    document.getElementById('btnAdd').addEventListener('click', addStudent);
+
+    render();
+  </script>
 </body>
 </html>
